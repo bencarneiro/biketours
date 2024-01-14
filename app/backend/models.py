@@ -36,7 +36,7 @@ class Tour(models.Model):
 
 class TourRoute(models.Model):
 
-    tour = models.ForeignKey(Tour, on_delete=models.DO_NOTHING)
+    tour = models.ForeignKey(TourType, on_delete=models.DO_NOTHING)
     geojson = models.TextField(null=True, blank=True)
 
     class Meta:
@@ -50,7 +50,7 @@ class TourSpot(models.Model):
     tour = models.ForeignKey(Tour, on_delete=models.DO_NOTHING)
     spot_number = models.IntegerField(null=False, blank=False)
     is_open = models.BooleanField(default=True)
-    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
+    # customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
 
     class Meta:
         managed = True
@@ -90,3 +90,15 @@ class CustomerWaiver(models.Model):
         managed = True
         db_table = "customer_waiver"
 
+
+class Reservation(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    tour = models.ForeignKey(Tour, on_delete = models.DO_NOTHING)
+    reservation_data = models.TextField(null=True, blank=True)
+    stripe_invoice_id = models.CharField(max_length=64, null=True, blank=True)
+    stripe_invoice = models.JSONField(null=True, blank=True)
+    
+    class Meta:
+        managed = True
+        db_table = "reservation"
