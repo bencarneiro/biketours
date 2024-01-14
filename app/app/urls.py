@@ -15,11 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from backend.views import home
+from backend.views import home, stripe_webhook, checkout, cancel, success, create_checkout_session
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home, name="home"),
+    path("stripe_webhook/", stripe_webhook, name="stripe_webhook"),
+    path("checkout/", checkout, name="checkout"),
+    path("cancel/", cancel, name="cancel"),
+    path("success/", success, name="success"),
+    path("create_checkout_session/", create_checkout_session, name="create_checkout_session"),
 ]
