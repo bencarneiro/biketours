@@ -15,8 +15,14 @@
           <h5>$20.00</h5>
         </div>
       </div>
+      
       <form action="/create_checkout_session/" method="POST">
-        <button type="submit" id="checkout-button">Checkout</button>
+
+        <input type="number" id="quantity" name="quantity" min="1" max="5">
+        <input type="hidden" name="tour_price" value="price_1OYZ6BI5l5pOpCHBjgUUzhfP" />
+        <input type="hidden" name="tour_id" value="dummy_tour_id" />
+        
+        <button  type="submit" id="checkout-button">Checkout</button>
       </form>
     </section>
   </body>

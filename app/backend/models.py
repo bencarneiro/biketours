@@ -108,6 +108,8 @@ class CheckoutSession(models.Model):
     id = models.CharField(max_length=512, primary_key=True)
     created = models.DateTimeField(null=False)
     paid = models.BooleanField(default=False)
+    total = models.BigIntegerField(null=True, blank=True)
+    tour_data = models.JSONField(null=True, blank=True)
 
     class Meta:
         managed = True
