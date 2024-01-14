@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from app import settings
+import datetime
 from django.views.decorators.csrf import csrf_exempt
+from backend.models import CheckoutSession
 
 import stripe
 
@@ -40,19 +42,27 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 @csrf_exempt
 def create_checkout_session(request):
     try:
+        product = "price_1OYZ6BI5l5pOpCHBjgUUzhfP"
+        quantity=1
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price': 'price_1OYZ6BI5l5pOpCHBjgUUzhfP',
-                    'quantity': 1,
+                    'price': product,
+                    'quantity': quantity,
                 },
             ],
             mode='payment',
-            success_url='127.0.0.1:8000/success/',
-            cancel_url='127.0.0.1:8000/cancel/',
+            success_url='http://127.0.0.1:8000/success/?session={CHECKOUT_SESSION_ID}',
+            cancel_url=f'http://127.0.0.1:8000/cancel/',
         )
+        cs = CheckoutSession(
+            id = checkout_session.id,
+            created = datetime.datetime.now(),
+            paid = False
+        )
+        cs.save()
     except Exception as e:
-        return str(e)
-
+        return HttpResponse(e)
+    print(checkout_session.url)
     return redirect(checkout_session.url)
