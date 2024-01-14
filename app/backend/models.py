@@ -105,7 +105,7 @@ class Reservation(models.Model):
 
 class CheckoutSession(models.Model):
 
-    id = models.CharField(max_length=512, primary_key=True),
+    id = models.CharField(max_length=512, primary_key=True)
     created = models.DateTimeField(null=False)
     paid = models.BooleanField(default=False)
 
