@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from app import settings
 import datetime
 from django.views.decorators.csrf import csrf_exempt
-from backend.models import CheckoutSession
+from backend.models import CheckoutSession, Tour, TourSpot
 import json
 import stripe
 
@@ -18,11 +18,17 @@ def process_checkout(session_id):
         cs.paid = True
         cs.total = session.amount_total
         cs.save()
-    pi = session.payment_intent
-    payment_intent = stripe.PaymentIntent.retrieve(pi)
-    print("\n\n\n\n\n\n\n")
-    print(payment_intent)
+
+    qty_to_reserve = int(cs.tour_data['quantity'])
+    tour_spots = TourSpot.objects.filter(tour__id=int(cs.tour_data['tour_id']))
+    for spot in tour_spots:
+        if spot.is_open and qty_to_reserve > 0:
+            spot.is_open = False
+            spot.save()
+            qty_to_reserve -= 1
+
     return session.customer
+
 # Create your views here.
 
 def home(request):
@@ -106,3 +112,23 @@ def create_checkout_session(request):
     print(checkout_session.url)
 
     return redirect(checkout_session.url)
+
+
+def calendar(request):
+    counter = 0
+    calendar_object = {}
+    day = datetime.date.today()
+    while counter < 31:
+        date_str = day.strftime("%Y-%m-%d")
+        print(date_str)
+        start = datetime.datetime.combine(day, datetime.time.min)
+        # print tmp # 2016-02-03 23:59:59.999999
+        end = start + datetime.timedelta(days=1)
+        this_days_tours = Tour.objects.filter(day__gt=start, day__lt=end).order_by('day')
+        calendar_object[start] = this_days_tours
+        counter += 1
+        day = day + datetime.timedelta(days=1)
+    # next_month = datetime.date.today() + datetime.timedelta(days=31)
+    # test = Tour.objects.filter(day__lt=next_month)
+    context = {"calendar": calendar_object}
+    return render(request, "calendar.html", context)

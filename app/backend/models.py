@@ -17,6 +17,7 @@ class TourType(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(null=False, blank=False, max_length=1024)
     description = models.TextField(null=True, blank=True)
+    stripe_price = models.CharField(max_length=256, null=True, blank=True)
 
     class Meta:
         managed = True
@@ -29,7 +30,16 @@ class Tour(models.Model):
     type = models.ForeignKey(TourType, on_delete=models.DO_NOTHING)
     day = models.DateTimeField(null=False, blank=False)
     capacity = models.IntegerField(null=False, blank=False)
-    
+
+    @property
+    def open_spots(self):
+        open_spots = 0
+        spots = TourSpot.objects.filter(tour__id=self.id)
+        for spot in spots:
+            if spot.is_open:
+                open_spots += 1
+        return open_spots
+            
     class Meta:
         managed = True
         db_table = "tour"
@@ -91,17 +101,17 @@ class CustomerWaiver(models.Model):
         db_table = "customer_waiver"
 
 
-class Reservation(models.Model):
+# class Reservation(models.Model):
 
-    id = models.AutoField(primary_key=True)
-    tour = models.ForeignKey(Tour, on_delete = models.DO_NOTHING)
-    reservation_data = models.TextField(null=True, blank=True)
-    stripe_invoice_id = models.CharField(max_length=64, null=True, blank=True)
-    stripe_invoice = models.JSONField(null=True, blank=True)
+#     id = models.AutoField(primary_key=True)
+#     tour = models.ForeignKey(Tour, on_delete = models.DO_NOTHING)
+#     reservation_data = models.TextField(null=True, blank=True)
+#     stripe_invoice_id = models.CharField(max_length=64, null=True, blank=True)
+#     stripe_invoice = models.JSONField(null=True, blank=True)
     
-    class Meta:
-        managed = True
-        db_table = "reservation"
+#     class Meta:
+#         managed = True
+#         db_table = "reservation"
 
 class CheckoutSession(models.Model):
 

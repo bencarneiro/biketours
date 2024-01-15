@@ -1,0 +1,48 @@
+<html>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px
+            }
+    </style>
+   <table>
+    <tr>
+        <th>
+            Day
+        </th>
+        <th>
+            Tours
+        </th>
+    </tr>
+    {% for day, tours in calendar.items %}
+    <tr>
+        <td>
+            {{ day|date:"l" }} - {{ day|date }}
+        </td>
+        <td>
+            {% for tour in tours %}
+            {{ tour.type.name }} -- {{tour.day|time}}
+            {% if tour.open_spots %} <br>
+            {{ tour.open_spots }} tour(s) available
+            <form action="/create_checkout_session/" method="POST">
+
+                <input type="number" id="quantity" name="quantity" min="0" max= {{ tour.open_spots }}>
+                <input type="hidden" name="tour_price" value={{ tour.type.stripe_price }} />
+                <input type="hidden" name="tour_id" value= {{ tour.id }} />
+                
+                <button  type="submit" id="checkout-button">Checkout</button>
+
+              </form>
+            {% else %}
+            
+             -- SOLD OUT
+            {% endif %}
+            <br>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+   </table> 
+   {{ calendar }}
+</html>
