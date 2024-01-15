@@ -59,7 +59,9 @@ def stripe_webhook(request):
     print(request)
     return JsonResponse({"hi": "hello"})
 
-
+def barton(request):
+    context = {}
+    return render(request, "barton.html", context)
 
 # This is your test secret API key.
 stripe.api_key = settings.STRIPE_SECRET_KEY

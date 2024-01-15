@@ -18,6 +18,7 @@ class TourType(models.Model):
     name = models.CharField(null=False, blank=False, max_length=1024)
     description = models.TextField(null=True, blank=True)
     stripe_price = models.CharField(max_length=256, null=True, blank=True)
+    url = models.CharField(max_length=256, null=True, blank=True)
 
     class Meta:
         managed = True

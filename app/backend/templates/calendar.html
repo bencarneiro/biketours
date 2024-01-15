@@ -22,7 +22,7 @@
         </td>
         <td>
             {% for tour in tours %}
-            {{ tour.type.name }} -- {{tour.day|time}}
+            {{ tour.type.name }} -- <a target="_blank" href={{tour.type.url}}>details</a> -- {{tour.day|time}}
             {% if tour.open_spots %} <br>
             {{ tour.open_spots }} tour(s) available
             <form action="/create_checkout_session/" method="POST">
