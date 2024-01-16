@@ -32,8 +32,24 @@ def process_checkout(session_id):
 # Create your views here.
 
 def home(request):
+    counter = 0
+    calendar_object = {}
+    day = datetime.date.today()
+    while counter < 31:
+        date_str = day.strftime("%Y-%m-%d")
+        print(date_str)
+        start = datetime.datetime.combine(day, datetime.time.min)
+        # print tmp # 2016-02-03 23:59:59.999999
+        end = start + datetime.timedelta(days=1)
+        this_days_tours = Tour.objects.filter(day__gt=start, day__lt=end).order_by('day')
+        calendar_object[start] = this_days_tours
+        counter += 1
+        day = day + datetime.timedelta(days=1)
+    # next_month = datetime.date.today() + datetime.timedelta(days=31)
+    # test = Tour.objects.filter(day__lt=next_month)
+    context = {"calendar": calendar_object}
     # latest_question_list = Question.objects.order_by("-pub_date")[:5]
-    context = {"latest_question_list": "hi"}
+    # context = {"latest_question_list": "hi"}
     return render(request, "home.html", context)
 
 
