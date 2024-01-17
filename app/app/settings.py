@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-ym2i(7vt$4%4bn6&un_9+9@ro%2005ia%79vz@d@61+db^_xot
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["http://23.239.27.219:8000/", "hippie.city", "www.hippie.city", "http://hippie.city",  "http://www.hippie.city", "https://hippie.city",  "https://www.hippie.city"]
 
 
 # Application definition
