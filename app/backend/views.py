@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from backend.models import CheckoutSession, Tour, TourSpot
 import json
 import stripe
+from django.views.generic.base import RedirectView
 
 def process_checkout(session_id):
 
@@ -150,3 +151,6 @@ def calendar(request):
     # test = Tour.objects.filter(day__lt=next_month)
     context = {"calendar": calendar_object}
     return render(request, "calendar.html", context)
+
+
+favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
