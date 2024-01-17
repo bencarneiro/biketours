@@ -29,4 +29,4 @@ urlpatterns = [
     path("calendar/", calendar, name="calendar"),
     path("barton/", barton, name="barton"),
     path("create_checkout_session/", create_checkout_session, name="create_checkout_session"),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
