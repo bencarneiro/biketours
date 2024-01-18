@@ -138,3 +138,20 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = "backend.Customer"
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_51OYYB3I5l5pOpCHB5HR7Qg1Zd827przAsicQ3uG24Sw8WeU43utCmwRZsOWKKjbqGNF09favZYQa9lW6fCRYGEq9008vkbRDVL")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_51OYYB3I5l5pOpCHBZdf2WXpfnWCIzKav3NegYYf9K5M3tfF3ZIU1pW9NPcbs1pz7kI1aCudpEdHss92C837uLjKx00qEJGvmvi")
+
+#For email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", 'apikey')
+
+#Must generate specific password for your app in [gmail settings][1]
+EMAIL_HOST_PASSWORD =  os.environ.get("EMAIL_HOST_PASSWORD", "")
+
+EMAIL_PORT = 587
+
+#This did the trick
+DEFAULT_FROM_EMAIL = "hello@hippie.city"
