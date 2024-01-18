@@ -122,6 +122,7 @@ class CheckoutSession(models.Model):
     paid = models.BooleanField(default=False)
     total = models.BigIntegerField(null=True, blank=True)
     tour_data = models.JSONField(null=True, blank=True)
+    stripe_data = models.JSONField(null=True, blank=True)
 
     class Meta:
         managed = True

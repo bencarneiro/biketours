@@ -8,7 +8,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         send_mail(
             "Confirmation - Your Bike Tour",
-            "Here is the message.",
+            "Here is the messagelink<https:hippie.city>.",
             "biketours@bencarneiro.com",
             ["bencarneiro@gmail.com"],
             fail_silently=False,

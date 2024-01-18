@@ -7,17 +7,20 @@ from backend.models import CheckoutSession, Tour, TourSpot
 import json
 import stripe
 from django.views.generic.base import RedirectView
+from django.core.mail import send_mail
 
 def process_checkout(session_id):
 
     session = stripe.checkout.Session.retrieve(
         session_id,
     )
+    print("session")
     print(session)
     if session.payment_status == "paid": 
         cs = CheckoutSession.objects.get(id=session.id)
         cs.paid = True
         cs.total = session.amount_total
+        cs.stripe_data=session
         cs.save()
 
     qty_to_reserve = int(cs.tour_data['quantity'])
@@ -27,7 +30,75 @@ def process_checkout(session_id):
             spot.is_open = False
             spot.save()
             qty_to_reserve -= 1
+    print("payment_iontent")
+    payment_intent = stripe.PaymentIntent.retrieve(session.payment_intent)
+    charge = stripe.Charge.retrieve(payment_intent.latest_charge)
+    receipt_url = charge.receipt_url
+    print("charge")
+    print(charge)
+    print(payment_intent)
+    print(session['customer_details'])
+    confirmation_email = session['customer_details']['email']
+    customer_name = session['customer_details']['name']
+    customer_phone = session['customer_details']['phone']
+    number_of_tickets = cs.tour_data['quantity']
+    tour_time_string = tour_spots[0].tour.day.strftime("%x - %I%p")
+    message_txt = f"""
+    \Congratulations {customer_name}! \n
+    You just booked a day of fun-in-the-sun with a true Austin slacker. \n
+    WHERE: 2816 Rio Grande St, Austin TX 78705 \n
+    WHEN: {tour_time_string} \n
+    WHAT TO BRING: See details here - https://hippie.city/barton/  \n\n
+    Thank you for your business. I cant wait to show you everything I love about this beautiful city. 
+    Best Wishes, \n
+    Ben Carneiro \n\n
+    512 632 2715
+    biketours@bencarneiro.com
+    
+"""
+    message_html = f"""
 
+    <h1>Congratulations {customer_name}! </h1><br>
+    <h3>You just booked a day of fun-in-the-sun with a bona fide Austin slacker. You have {number_of_tickets} LICENSE(s) TO CHILL!</h3>
+    <p><a clicktracking="off" href="{receipt_url}">Your Receipt</a></p> <br><br>
+    
+    WHAT: A ten-mile trail ride, some light snacks and refreshments, and a dip in the natural springs<br>
+    WHERE: 2816 Rio Grande St, Austin TX 78705 <br>
+    WHEN: {tour_time_string} <br>
+    WHAT TO BRING: <a clicktracking="off" href="https://hippie.city/barton/">MORE DETAILS ABOUT THE RIDE HERE</a> </p><br><br>
+    <p>Thank you for your business. I cant wait to show you what I love about this beautiful city. <br><br>
+
+    <p>And remember! The hotter it is on the ride down, the more fun it is when you jump in!</p> <br>
+    <img src="https://hippie.city/static/barton_dive.jpg/" style="width:100%"></img>
+
+    <p>
+    <a clicktracking="off" href="{receipt_url}">Your Receipt</a></p> <br><br>
+    <p>
+
+    Best Wishes, <br>
+    Ben Carneiro <br><br>
+    <a a clicktracking="off" href="https://hippie.city">https://hippie.city</a><br>
+    512 632 2715<br>
+    biketours@bencarneiro.com</p>
+    """
+    try:
+        send_mail(
+            f"Confirmation - Hippie City Bike Tours - {tour_time_string}",
+            message_txt,
+            "biketours@bencarneiro.com",
+            [confirmation_email],
+            fail_silently=False,
+            html_message=message_html
+        )
+    except:
+        send_mail(
+            "Confirmation - DID NOT SEND",
+            f"{session.id}",
+            "biketours@bencarneiro.com",
+            ["bencarneiro@gmail.com"],
+            fail_silently=False,
+        )
+    print("email sent")
     return session.customer
 
 # Create your views here.
