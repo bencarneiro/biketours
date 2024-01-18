@@ -78,7 +78,7 @@ table, th, td {
 
   <!-- About Tours Section -->
   <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
-    <h2 class="w3-text-light-grey">Beers, Bikes, and Barton Springs</h2>
+    <h2 class="w3-text-light-grey">Beers, Bikes, Barton Springs</h2>
     <hr style="width:200px" class="w3-opacity">
     <p> Austin has more entertainment options than you can shake a stick at, but I want to show you what the locals do: "Hang Out," as the kids say. My main tour is a laid-back cruise, down the Shoal Creek Trail, over Lady Bird Lake, and to the Barton Springs Pool, where we'll have a light picnic and some cold beer. Whether it's winter or summer, you'll have the opportunity to jump in the pool and hang out in the sun for a while before we pack up and ride back uptown. This no-cars, no-worries cruise is everything I love about Austin encapsulated in an afternoon of fun in the sun. 
     </p>
@@ -98,6 +98,8 @@ table, th, td {
 
   <!-- BOOKINGS Section -->
   <div class="w3-padding-64 w3-content w3-text-grey" id="book">
+    <h2 class="w3-text-light-grey">Book a Tour</h2>
+    <hr style="width:200px" class="w3-opacity">
     <table>
       <tr>
           <th>
@@ -114,7 +116,7 @@ table, th, td {
           </td>
           <td>
               {% for tour in tours %}
-              {{ tour.type.name }} -- <a target="_blank" href={{tour.type.url}}>details</a> -- {{tour.day|time}}
+              {{ tour.type.name }} -- <a target="_blank" href={{tour.type.url}}?tour_id={{tour.id}}>details</a> -- {{tour.day|time}}
               {% if tour.open_spots %} <br>
               {{ tour.open_spots }} tour(s) available
               <form action="/create_checkout_session/" method="POST">

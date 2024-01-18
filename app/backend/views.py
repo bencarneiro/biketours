@@ -99,7 +99,7 @@ def process_checkout(session_id):
             fail_silently=False,
         )
     print("email sent")
-    return session.customer
+    return cs.tour_data
 
 # Create your views here.
 
@@ -129,9 +129,10 @@ def success(request):
     # latest_question_list = Question.objects.order_by("-pub_date")[:5]
     stripe_checkout_session_id = request.GET['session']
     print(stripe_checkout_session_id)
-    customer = process_checkout(stripe_checkout_session_id)
-    context = {"latest_question_list": customer}
-    return render(request, "success.html", context)
+    tour_data = process_checkout(stripe_checkout_session_id)
+    tour = Tour.objects.get(id=tour_data['tour_id'])
+    context = {"confirmation": tour_data, "tour": tour}
+    return render(request, "barton.html", context)
 
 def checkout(request):
     # latest_question_list = Question.objects.order_by("-pub_date")[:5]
@@ -148,7 +149,11 @@ def stripe_webhook(request):
     return JsonResponse({"hi": "hello"})
 
 def barton(request):
-    context = {}
+    try:
+        tour = Tour.objects.get(id=request.GET['tour_id'])
+    except:
+        tour = None
+    context = {"tour": tour}
     return render(request, "barton.html", context)
 
 # This is your test secret API key.

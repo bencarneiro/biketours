@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
     body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
-    h1 {padding-top: 10%; }
+    h1 {padding-top: 60px; }
     table, th, td, p, ul {
                 border: 1px solid white;
                 border-collapse: collapse;
@@ -24,11 +24,30 @@
 
     <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
         <a href="/"><img src="/static/bike_logo.jpg" style="position:absolute;left:0;top:0;width:120px"></a>
+
+        {% if confirmation %}
+        
+        <h1 class="w3-jumbo">Booking Confirmed!</h1>
+        {% else %}
         <h1 class="w3-jumbo">Barton Springs Tour AKA the "Home Run"</h1>
+        {% endif %}
+        {% if tour %}
+        <h2>
+            {{ tour.day|date:"l, F d, Y - hA" }} 
+            
+        </h2>
+        {% endif %}
         <img src="/static/barton_dive.jpg" alt="boy" class="w3-image" width=50%>
       </header>
       
       <body class="w3-black">
+        {% if confirmation %}
+        
+    <h2>
+        Your Booking
+    </h2>
+        <p>You have ordered {{ confirmation.quantity }} bike tour(s) for {{ tour.day|date:"l, F d, Y - hA" }} <br> Please reach out to biketours@bencarneiro.com if there are any issues or questions</p>
+        {% endif %}
     <h2>
         The Ride
     </h2>
@@ -67,6 +86,25 @@
     <p>Our Meeting point is a <a target="_blank" href="https://www.google.com/maps/place/2816+Rio+Grande+St,+Austin,+TX+78705">vacant lot at 2816 Rio Grande St, Austin TX 78705</a></p>
     <h2>Where do I park?</h2>
     <p>I do not have parking, and West Campus is the busiest neighborhood in Texas. There is paid street parking on Rio Grande, and the street parking just north of 29th street is free. Leave yourself some time to find a spot. Transit access to the area isn't terrible, but I recommend walking or calling a cab over taking the bus.</p>
+    <h2>How do I sign up?</h2>
+        {% if tour and not confirmation %}
+        {% if tour.open_spots %}
+
+        <form action="/create_checkout_session/" method="POST">
+  
+            <input type="number" id="quantity" name="quantity" min="0" max= {{ tour.open_spots }}>
+            <input type="hidden" name="tour_price" value={{ tour.type.stripe_price }} />
+            <input type="hidden" name="tour_id" value= {{ tour.id }} />
+            
+            <button  type="submit" id="checkout-button">Checkout</button>
+
+          </form>
+          {% else %}
+          <p>Sorry, this tour is sold out, but you can check out our <a href="/#book">bookings page</a> for more tours</p>
+          {% endif %}
+        {% else %}
+        <p>Check out our <a href="/#book">bookings page!</a></p>
+        {% endif %}
     <h2>The Route</h2>
     <div style="overflow:hidden;position:relative;"><div style="position:relative;width:100%;padding-top:56.25%;overflow:visible;"/><iframe name="plotaroute_map_2490857" src="https://www.plotaroute.com/embedmap/2490857?units=mi" style="position:absolute;top:0;left:0;bottom:0;right:0;width:100%; height:100%;" frameborder="0" scrolling="no" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe></div></div>
 
