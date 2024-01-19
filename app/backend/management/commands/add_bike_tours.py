@@ -15,19 +15,20 @@ class Command(BaseCommand):
             start = datetime.datetime.combine(day, datetime.time.min)
             # print tmp # 2016-02-03 23:59:59.999999
             # end = start + datetime.timedelta(days=1)
-            tour_type = TourType.objects.get(id=1)
-            tour = Tour(
-                type=tour_type,
-                day= start + datetime.timedelta(hours=11),
-                capacity=6
-            )
-            tour.save()
-            for x in range(6):
-                ts = TourSpot(
-                    tour=tour,
-                    spot_number=x,
-                    is_open=True
+            if start.weekday() != 0:
+                tour_type = TourType.objects.get(id=1)
+                tour = Tour(
+                    type=tour_type,
+                    day= start + datetime.timedelta(hours=11),
+                    capacity=6
                 )
-                ts.save()
+                tour.save()
+                for x in range(6):
+                    ts = TourSpot(
+                        tour=tour,
+                        spot_number=x,
+                        is_open=True
+                    )
+                    ts.save()
             day = day + datetime.timedelta(days=1)
             counter +=1

@@ -49,7 +49,7 @@ def process_checkout(session_id):
     message_txt = f"""
     \Congratulations {customer_name}! \n
     You just booked a day of fun-in-the-sun with a true Austin slacker. \n
-    WHERE: 2816 Rio Grande St, Austin TX 78705 \n
+    WHERE: 2816 Rio Grande St, Austin TX 78705 -- this is a vacant lot btw \n
     WHEN: {tour_time_string} \n
     WHAT TO BRING: See details here - https://hippie.city/barton/  \n\n
     Thank you for your business. I cant wait to show you everything I love about this beautiful city. 
@@ -66,7 +66,7 @@ def process_checkout(session_id):
     <p><a clicktracking="off" href="{receipt_url}">Your Receipt</a></p> <br><br>
     
     WHAT: A ten-mile trail ride, some light snacks and refreshments, and a dip in the natural springs<br>
-    WHERE: 2816 Rio Grande St, Austin TX 78705 <br>
+    WHERE: 2816 Rio Grande St, Austin TX 78705 - This is a vacant lot<br>
     WHEN: {tour_time_string} <br>
     WHAT TO BRING: <a clicktracking="off" href="https://hippie.city/barton/">MORE DETAILS ABOUT THE RIDE HERE</a> </p><br><br>
     <p>Thank you for your business. I cant wait to show you what I love about this beautiful city. <br><br>
