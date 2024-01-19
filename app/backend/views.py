@@ -73,9 +73,7 @@ def process_checkout(session_id):
 
     <p>And remember! The hotter it is on the ride down, the more fun it is when you jump in!</p> <br>
     <img src="https://hippie.city/static/barton_dive.jpg/" style="width:100%"></img>
-
-    <p>
-    <a clicktracking="off" href="{receipt_url}">Your Receipt</a></p> <br><br>
+    <br><br>
     <p>
 
     Best Wishes, <br>
