@@ -116,7 +116,7 @@ table, th, td {
           </td>
           <td>
               {% for tour in tours %}
-              {{ tour.type.name }} -- <a target="_blank" href={{tour.type.url}}?tour_id={{tour.id}}>details</a> -- {{tour.day|time}}
+              {{ tour.type.name }} -- ${{ tour.type.price_in_dollars}} -- <a target="_blank" href={{tour.type.url}}?tour_id={{tour.id}}>details</a> -- {{tour.day|time}}
               {% if tour.open_spots %} <br>
               {{ tour.open_spots }} tour(s) available
               <form action="/create_checkout_session/" method="POST">

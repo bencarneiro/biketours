@@ -33,7 +33,7 @@
         {% endif %}
         {% if tour %}
         <h2>
-            {{ tour.day|date:"l, F d, Y - hA" }} 
+            {{ tour.day|date:"l, F d, Y - hA" }}
             
         </h2>
         {% endif %}
@@ -86,10 +86,12 @@
     <p>Our Meeting point is a <a target="_blank" href="https://www.google.com/maps/place/2816+Rio+Grande+St,+Austin,+TX+78705">vacant lot at 2816 Rio Grande St, Austin TX 78705</a></p>
     <h2>Where do I park?</h2>
     <p>I do not have parking, and West Campus is the busiest neighborhood in Texas. There is paid street parking on Rio Grande, and the street parking just north of 29th street is free. Leave yourself some time to find a spot. Transit access to the area isn't terrible, but I recommend walking or calling a cab over taking the bus.</p>
+    <h2>How much does it cost?</h2>
+    <p>Only $59 for an afternoon down by the creek</p>
     <h2>How do I sign up?</h2>
         {% if tour and not confirmation %}
         {% if tour.open_spots %}
-
+        <p>For the tour on {{ tour.day|date:"l, F d, Y - hA" }}, you may register here</p>
         <form action="/create_checkout_session/" method="POST">
   
             <input type="number" id="quantity" name="quantity" min="0" max= {{ tour.open_spots }}>
@@ -98,7 +100,8 @@
             
             <button  type="submit" id="checkout-button">Checkout</button>
 
-          </form>
+          </form>  - {{ tour.open_spots }} spot(s) left
+          <p>Or check out our <a href="/#book">bookings page</a> for more tours</p>
           {% else %}
           <p>Sorry, this tour is sold out, but you can check out our <a href="/#book">bookings page</a> for more tours</p>
           {% endif %}
