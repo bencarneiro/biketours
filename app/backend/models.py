@@ -56,19 +56,6 @@ class TourRoute(models.Model):
         db_table = "tour_route"
 
 
-class TourSpot(models.Model):
-
-    id = models.AutoField(primary_key=True)
-    tour = models.ForeignKey(Tour, on_delete=models.DO_NOTHING)
-    spot_number = models.IntegerField(null=False, blank=False)
-    is_open = models.BooleanField(default=True)
-    # customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
-
-    class Meta:
-        managed = True
-        db_table = "tour_spot"
-
-
 class TourGroup(models.Model):
 
     id = models.AutoField(primary_key=True)
@@ -127,3 +114,17 @@ class CheckoutSession(models.Model):
     class Meta:
         managed = True
         db_table = "checkout_session"
+
+
+
+class TourSpot(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    tour = models.ForeignKey(Tour, on_delete=models.DO_NOTHING)
+    spot_number = models.IntegerField(null=False, blank=False)
+    is_open = models.BooleanField(default=True)
+    checkout_session = models.ForeignKey(CheckoutSession, null=True, blank=True, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        managed = True
+        db_table = "tour_spot"

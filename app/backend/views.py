@@ -25,9 +25,12 @@ def process_checkout(session_id):
 
     qty_to_reserve = int(cs.tour_data['quantity'])
     tour_spots = TourSpot.objects.filter(tour__id=int(cs.tour_data['tour_id']))
+    num_spots_already_reserved_for_this_checkout_session = len(TourSpot.objects.filter(checkout_session=cs))
+    qty_to_reserve -= num_spots_already_reserved_for_this_checkout_session 
     for spot in tour_spots:
         if spot.is_open and qty_to_reserve > 0:
             spot.is_open = False
+            spot.checkout_session=cs
             spot.save()
             qty_to_reserve -= 1
     print("payment_iontent")
