@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from app import settings
 import datetime
 from django.views.decorators.csrf import csrf_exempt
-from backend.models import CheckoutSession, Tour, TourSpot
+from backend.models import CheckoutSession, Tour, TourSpot, ConfirmationEmailSent
 import json
 import stripe
 from django.views.generic.base import RedirectView
@@ -45,7 +45,7 @@ def process_checkout(session_id):
     customer_name = session['customer_details']['name']
     customer_phone = session['customer_details']['phone']
     number_of_tickets = cs.tour_data['quantity']
-    tour_time_string = tour_spots[0].tour.day.strftime("%x - %I%p")
+    tour_time_string = tour_spots[0].tour.day.strftime("%A, %B %d, %Y -- %I%p")
     message_txt = f"""
     \Congratulations {customer_name}! \n
     You just booked a day of fun-in-the-sun with a true Austin slacker. \n
@@ -85,14 +85,22 @@ def process_checkout(session_id):
     biketours@bencarneiro.com</p>
     """
     try:
-        send_mail(
-            f"Confirmation - Hippie City Bike Tours - {tour_time_string}",
-            message_txt,
-            "biketours@bencarneiro.com",
-            [confirmation_email],
-            fail_silently=False,
-            html_message=message_html
-        )
+        mail_already_sent = ConfirmationEmailSent.objects.filter(checkout_session=cs)
+        if len(mail_already_sent) == 0:
+            send_mail(
+                f"Confirmation - Hippie City Bike Tours - {tour_time_string}",
+                message_txt,
+                "biketours@bencarneiro.com",
+                [confirmation_email],
+                fail_silently=False,
+                html_message=message_html
+            )
+            confirmation = ConfirmationEmailSent(
+                email=confirmation_email,
+                checkout_session=cs,
+                sent=True
+            )
+            confirmation.save()
     except:
         send_mail(
             "Confirmation - DID NOT SEND",

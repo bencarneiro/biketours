@@ -129,3 +129,13 @@ class TourSpot(models.Model):
     class Meta:
         managed = True
         db_table = "tour_spot"
+
+class ConfirmationEmailSent(models.Model):
+
+    checkout_session = models.ForeignKey(CheckoutSession, null=False, on_delete=models.DO_NOTHING)
+    email = models.CharField(max_length=512, null=False, blank=False)
+    sent = models.BooleanField(default=True)
+
+    class Meta:
+        managed = True
+        db_table = "confirmation_email_sent"
