@@ -198,8 +198,8 @@ def create_checkout_session(request):
                 },
             ],
             mode='payment',
-            success_url='http://127.0.0.1:8000/success/?session={CHECKOUT_SESSION_ID}',
-            cancel_url=f'http://127.0.0.1:8000/cancel/',
+            success_url='https://hippie.city/success/?session={CHECKOUT_SESSION_ID}',
+            cancel_url=f'https://hippie.city/cancel/',
         )
         tour_data = {
             "tour_id": tour_id,
