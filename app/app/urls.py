@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from backend.views import home, stripe_webhook, checkout, cancel, success, create_checkout_session, calendar, barton, favicon_view
+from backend.views import home, stripe_webhook, checkout, cancel, success, create_checkout_session, calendar, barton, report, favicon_view
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -28,6 +28,7 @@ urlpatterns = [
     path("success/", success, name="success"),
     path("calendar/", calendar, name="calendar"),
     path("barton/", barton, name="barton"),
+    path("report/", report, name="report"),
     path("create_checkout_session/", create_checkout_session, name="create_checkout_session"),
     re_path(r'^favicon\.ico$', favicon_view),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

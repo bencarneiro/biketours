@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<style>
+    table, th, td {
+  border: 1px solid black;
+}
+</style>
+<html>
+    <h1>Bike Tours Report</h1>
+    <table>
+        <tr>
+            <th>
+                Charge
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Revenue
+            </th>
+            <th>
+                Tour ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone
+            </th>
+        </tr>
+        
+        {% for receipt in recent_checkouts %}
+        <tr>
+        <td>
+            <a target="_blank" href="https://dashboard.stripe.com/payments/{{receipt.stripe_data.charge}}">stripe</a>
+            </td>
+<!--             
+        {{ receipt }}
+        {{receipt.tour_data}}
+        CHARGE {{receipt.stripe_data.charge}}
+        
+        
+        {{receipt.stripe_data.customer_details.name}}
+
+        {{receipt.stripe_data.customer_details.phone}}
+        -->
+        <td>{{receipt.created|date:"P F d Y"}}</td>
+        </td>
+        <td> {{receipt.stripe_data.amount_total}}</td>
+        <td>
+            <a href="https://hippie.city/barton/?tour_id={{ receipt.tour_data.tour_id }}">{{ receipt.tour_data.tour_id }}</a>
+        </td>
+        <td>{{receipt.stripe_data.customer_details.name}}</td>
+        <td>{{receipt.stripe_data.customer_details.email}}</td>
+        <td>{{receipt.stripe_data.customer_details.phone}}</td>
+         </tr>
+        {% endfor %}
+    </table>
+
+    <h2> upcoming tours</h2>
+    <table>
+        <tr>
+            <th>
+                SPOT
+            </th>
+            <th>
+                TOUR
+            </th>
+            <th>
+                NAME
+            </th>
+            <th>
+                EMAIL
+            </th>
+            <th>
+                PHONE
+            </th>
+        </tr>
+        {% for spot in upcoming_tour_spots %}
+        <tr><td>{{ spot.spot_number }}</td>
+            <td>
+                {{ spot.tour.day }}</td>
+                <td>
+                {{ spot.checkout_session.stripe_data.customer_details.name }}</td>
+                <td>
+                {{ spot.checkout_session.stripe_data.customer_details.email }}</td>
+                <td>
+                {{ spot.checkout_session.stripe_data.customer_details.phone }}
+            </td>
+            <td>
+        </tr>
+        {% endfor%}
+    </table>
+</html>

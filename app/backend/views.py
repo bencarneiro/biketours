@@ -153,6 +153,17 @@ def cancel(request):
     context = {"latest_question_list": "hi"}
     return render(request, "cancel.html", context)
 
+def report(request):
+    if not request.user.is_superuser:
+        return render(request, "home.html")
+    # latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    recent_checkouts = CheckoutSession.objects.filter(paid=True).order_by("-created")
+    yesterday = datetime.datetime.today() - datetime.timedelta(days=1)
+    next_week = datetime.datetime.today() + datetime.timedelta(days=10)
+    upcoming_tour_spots = TourSpot.objects.filter(tour_id__day__gt=yesterday, tour_id__day__lt=next_week).order_by("tour_id__day")
+    context = {"recent_checkouts": recent_checkouts, "upcoming_tour_spots": upcoming_tour_spots}
+    return render(request, "report.html", context)
+
 def stripe_webhook(request):
     print(request)
     return JsonResponse({"hi": "hello"})
