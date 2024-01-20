@@ -13,13 +13,16 @@
                 background-color: black;
                 color: white
                 }
+    p {
+        font-size:1.2rem;
+    }
     .w3-row-padding img {margin-bottom: 12px}
     /* Set the width of the sidebar to 120px */
     .w3-sidebar {width: 120px;background: #222;}
     /* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
-    #main {margin-left: 120px}
+    #main {margin: 120px}
     /* Remove margins from "page content" on small screens */
-    @media only screen and (max-width: 600px) {#main {margin-left: 0}}
+    @media only screen and (max-width: 800px) {#main {margin: 0}}
     </style>
 
     <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
@@ -41,6 +44,8 @@
       </header>
       
       <body class="w3-black">
+    
+<div class="w3-padding-large" id="main">
         {% if confirmation %}
         
     <h2>
@@ -56,12 +61,6 @@
     </p>
     
     <h2>
-        How Hard Is It?
-    </h2>
-    <p>
-        The whole experience lasts about three hours. It consists of 1-2 hours of cycling and 1-2 hours of chilling, depending on our pace. The distance is almost exactly ten miles, with just a short distance ridden in the street. Most of the ride is on car-free trails. The route includes pavement, gravel, asphalt, a few minor climbs, and in-general, just a lot of exposure to the outdoors. None of the physical activity could really be considered anything other than easy-to-moderate, but when you're in the Texas Heat, for 2-4 Hours at a time, you have to be conscious of the heat, hydration, and sunburn.
-    </p>
-    <h2>
         What's Included?
     </h2>
     <p>
@@ -74,6 +73,12 @@
     </p>
 
     <h2>
+        How Hard Is It?
+    </h2>
+    <p>
+        The whole experience lasts about three hours. It consists of 1-2 hours of cycling and 1-2 hours of chilling, depending on our pace. The distance is almost exactly ten miles, with just a short distance ridden in the street. Most of the ride is on car-free trails. The route includes pavement, gravel, asphalt, a few minor climbs, and in-general, just a lot of exposure to the outdoors. None of the physical activity could really be considered anything other than easy-to-moderate, but when you're in the Texas Heat, for 2-4 Hours at a time, you have to be conscious of the heat, hydration, and sunburn.
+    </p>
+    <h2>
         What Do I Need To Bring?
     </h2>
     <p>
@@ -82,16 +87,19 @@
         3) Common Sense - Austin is very, very hot. If it's the summer, there is some reasonable expectation that you show up relatively hydrated, and I recommend putting on sunscreen before you arrive. 
 
     </p>
-    <h2>Where do we meet?</h2>
+    <h2>Where Do We Meet?</h2>
     <p>Our Meeting point is a <a target="_blank" href="https://www.google.com/maps/place/2816+Rio+Grande+St,+Austin,+TX+78705">vacant lot at 2816 Rio Grande St, Austin TX 78705</a></p>
-    <h2>Where do I park?</h2>
+    <h2>When Do We Meet?</h2>
+    <p>Come get your waiver signed and bike seat adjusted around 10:45, so we can roll out around 11AM. The earlier you show up, the more exploring we can do</p>
+   
+    <h2>Where Do I Park?</h2>
     <p>I do not have parking, and West Campus is the busiest neighborhood in Texas. There is paid street parking on Rio Grande, and the street parking just north of 29th street is free. Leave yourself some time to find a spot. Transit access to the area isn't terrible, but I recommend walking or calling a cab over taking the bus.</p>
-    <h2>How much does it cost?</h2>
+    <h2>How Much Does It Cost?</h2>
     <p>Only $69 for an afternoon down by the creek</p>
     {% if confirmation %}
-    <h2>I need more tickets</h2>
+    <h2>I Need More Tickets</h2>
     {% else %}
-    <h2>How do I sign up?</h2>
+    <h2>How Do I Sign Up?</h2>
     {% endif %}
         {% if tour.open_spots %}
         <p>For the tour on {{ tour.day|date:"l, F d, Y - hA" }}, you may register here</p>
@@ -110,6 +118,6 @@
           {% endif %}
     <h2>The Route</h2>
     <div style="overflow:hidden;position:relative;"><div style="position:relative;width:100%;padding-top:56.25%;overflow:visible;"/><iframe name="plotaroute_map_2490857" src="https://www.plotaroute.com/embedmap/2490857?units=mi" style="position:absolute;top:0;left:0;bottom:0;right:0;width:100%; height:100%;" frameborder="0" scrolling="no" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe></div></div>
-
+        </div>
 </body>
     </html>
