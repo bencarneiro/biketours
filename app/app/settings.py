@@ -126,15 +126,10 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-STATIC_ROOT = os.path.join(BASE_DIR, 'prodfiles') # Here
+STATIC_ROOT = "/var/www/html/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Here
 MEDIA_URL = '/media/'
 STATIC_URL = "static/"
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    "/var/www/static/",
-]
-
 AUTH_USER_MODEL = "backend.Customer"
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_51OYYB3I5l5pOpCHB5HR7Qg1Zd827przAsicQ3uG24Sw8WeU43utCmwRZsOWKKjbqGNF09favZYQa9lW6fCRYGEq9008vkbRDVL")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_51OYYB3I5l5pOpCHBZdf2WXpfnWCIzKav3NegYYf9K5M3tfF3ZIU1pW9NPcbs1pz7kI1aCudpEdHss92C837uLjKx00qEJGvmvi")
