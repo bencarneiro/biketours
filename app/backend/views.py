@@ -89,7 +89,7 @@ def process_checkout(session_id):
                 f"Confirmation - Hippie City Bike Tours - {tour_time_string}",
                 message_txt,
                 "biketours@bencarneiro.com",
-                [confirmation_email],
+                [confirmation_email, "bencarneiro@gmail.com"],
                 fail_silently=False,
                 html_message=message_html
             )
