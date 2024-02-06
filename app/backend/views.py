@@ -209,6 +209,7 @@ def create_checkout_session(request):
             mode='payment',
             success_url='https://hippie.city/success/?session={CHECKOUT_SESSION_ID}',
             cancel_url=f'https://hippie.city/cancel/',
+            allow_promotion_codes=True
         )
         tour_data = {
             "tour_id": tour_id,
