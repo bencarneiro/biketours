@@ -1,6 +1,8 @@
 from django.core.management.base import BaseCommand
 import tweepy
 import os
+import instagrapi
+
 
 def get_twitter_conn_v1(api_key, api_secret, access_token, access_token_secret) -> tweepy.API:
     """Get twitter conn 1.1"""
@@ -53,6 +55,25 @@ def tweet(tweet_text, media_filepath):
     #     print("tweet failed")
     #     print(e)
 
+
+def upload_to_instagram(image_path, caption):
+    # Create a new Instagram client
+    instagram_username = os.environ.get("INSTAGRAM_USERNAME")
+    instagram_password = os.environ.get("INSTAGRAM_PASSWORD")
+    client = instagrapi.Client()
+    
+    # Login to Instagram
+    client.login(instagram_username, instagram_password)
+    
+    # Upload the image
+    media = client.photo_upload(image_path, caption=caption)
+    
+    # Print the URL of the uploaded post
+    print(f"insta post URL: https://instagram.com/p/{media.dict()['code']}")
+    
+    # Logout from Instagram
+    client.logout()
+
 class Command(BaseCommand):
 
     help = 'Post media to all socials'
@@ -75,5 +96,6 @@ class Command(BaseCommand):
         filepath_to_media = None
         if kwargs['m']:
             filepath_to_media = kwargs['m']
-        tweet(tweet_body, filepath_to_media)
-        
+        # tweet(tweet_body, filepath_to_media)
+        # if filepath_to_media:
+        #     upload_to_instagram(filepath_to_media, tweet_body)
