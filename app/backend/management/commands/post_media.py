@@ -104,7 +104,7 @@ def post_to_facebook(text, image_path):
     # Initialize the Graph API with your page access token
     graph = facebook.GraphAPI(access_token=facebook_page_token)
     with open(image_path, 'rb') as upload:
-        photo = graph.put_photo(image=upload.read(), album_path='me/photos', published=False, message=text)
+        photo = graph.put_photo(image=upload.read(), album_path='me/photos', published=True, message=text)
     photo_id = photo['id']
     post_url = f"https://www.facebook.com/{page_id}/photos/{photo_id}"
 
@@ -134,4 +134,4 @@ class Command(BaseCommand):
         # if filepath_to_media:
         #     upload_to_instagram(filepath_to_media, tweet_body)
         # post_to_mastodon(tweet_body, filepath_to_media)
-        post_to_facebook(tweet_body, filepath_to_media)
+        # post_to_facebook(tweet_body, filepath_to_media)
