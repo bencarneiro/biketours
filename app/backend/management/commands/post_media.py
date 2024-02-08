@@ -3,7 +3,8 @@ import tweepy
 import os
 import instagrapi
 from mastodon import Mastodon
-
+import facebook
+import requests
 
 def get_twitter_conn_v1(api_key, api_secret, access_token, access_token_secret) -> tweepy.API:
     """Get twitter conn 1.1"""
@@ -94,6 +95,19 @@ def post_to_mastodon(text, image_path):
     # Post the image with description to your Mastodon account
     mastodon.status_post(status=text, media_ids=[media['id']])
 
+
+def post_to_facebook(text, image_path):
+
+    # Your Facebook Page Access Token
+    facebook_page_token = os.environ.get("FACEBOOK_PAGE_TOKEN", "")
+    page_id="61555831386128"
+    # Initialize the Graph API with your page access token
+    graph = facebook.GraphAPI(access_token=facebook_page_token)
+    with open(image_path, 'rb') as upload:
+        photo = graph.put_photo(image=upload.read(), album_path='me/photos', published=False, message=text)
+    photo_id = photo['id']
+    post_url = f"https://www.facebook.com/{page_id}/photos/{photo_id}"
+
 class Command(BaseCommand):
 
     help = 'Post media to all socials'
@@ -119,4 +133,5 @@ class Command(BaseCommand):
         # tweet(tweet_body, filepath_to_media)
         # if filepath_to_media:
         #     upload_to_instagram(filepath_to_media, tweet_body)
-        post_to_mastodon(tweet_body, filepath_to_media)
+        # post_to_mastodon(tweet_body, filepath_to_media)
+        post_to_facebook(tweet_body, filepath_to_media)
