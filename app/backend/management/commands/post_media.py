@@ -5,6 +5,7 @@ import instagrapi
 from mastodon import Mastodon
 import facebook
 import requests
+import pytumblr
 
 def get_twitter_conn_v1(api_key, api_secret, access_token, access_token_secret) -> tweepy.API:
     """Get twitter conn 1.1"""
@@ -108,6 +109,29 @@ def post_to_facebook(text, image_path):
     photo_id = photo['id']
     post_url = f"https://www.facebook.com/{page_id}/photos/{photo_id}"
 
+
+def post_to_tumblr(text, filepath):
+    tumblr_consumer_key = os.environ.get("TUMBLR_CONSUMER_KEY", "")
+    tumblr_consumer_secret = os.environ.get("TUMBLR_CONSUMER_SECRET", "")
+    tumblr_token = os.environ.get("TUMBLR_TOKEN", "")
+    tumblr_token_secret = os.environ.get("TUMBLR_TOKEN_SECRET", "")
+
+    client = pytumblr.TumblrRestClient(
+        tumblr_consumer_key,
+        tumblr_consumer_secret,
+        tumblr_token,
+        tumblr_token_secret
+        )
+    
+    client.create_photo("hippiecity", state="published", tags=["austin", "austintx", "biketours", "tours", "austinevents", "austinmeetups", "austintours", "austinvacation", "austinparks"],
+        caption=text,
+        data=filepath)
+
+# Make the request
+    print(client.info())
+    # client.info()
+
+
 class Command(BaseCommand):
 
     help = 'Post media to all socials'
@@ -135,3 +159,4 @@ class Command(BaseCommand):
         #     upload_to_instagram(filepath_to_media, tweet_body)
         # post_to_mastodon(tweet_body, filepath_to_media)
         # post_to_facebook(tweet_body, filepath_to_media)
+        # post_to_tumblr(tweet_body, filepath_to_media)
