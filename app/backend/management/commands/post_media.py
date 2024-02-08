@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 import tweepy
 import os
 import instagrapi
+from mastodon import Mastodon
 
 
 def get_twitter_conn_v1(api_key, api_secret, access_token, access_token_secret) -> tweepy.API:
@@ -74,6 +75,25 @@ def upload_to_instagram(image_path, caption):
     # Logout from Instagram
     client.logout()
 
+
+def post_to_mastodon(text, image_path):
+
+    # Mastodon instance URL and access token
+    instance_url = "https://bencarneiro.com"
+    mastodon_token = os.environ.get("MASTODON_TOKEN")
+
+    # Initialize Mastodon with the instance URL and access token
+    mastodon = Mastodon(
+        access_token=mastodon_token,
+        api_base_url=instance_url
+    )
+
+    # Post the image
+    media = mastodon.media_post(image_path, description='alt')
+
+    # Post the image with description to your Mastodon account
+    mastodon.status_post(status=text, media_ids=[media['id']])
+
 class Command(BaseCommand):
 
     help = 'Post media to all socials'
@@ -99,3 +119,4 @@ class Command(BaseCommand):
         # tweet(tweet_body, filepath_to_media)
         # if filepath_to_media:
         #     upload_to_instagram(filepath_to_media, tweet_body)
+        post_to_mastodon(tweet_body, filepath_to_media)
