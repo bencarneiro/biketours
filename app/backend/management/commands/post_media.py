@@ -6,6 +6,7 @@ from mastodon import Mastodon
 import facebook
 import requests
 import pytumblr
+from py3pin.Pinterest import Pinterest
 
 def get_twitter_conn_v1(api_key, api_secret, access_token, access_token_secret) -> tweepy.API:
     """Get twitter conn 1.1"""
@@ -132,6 +133,25 @@ def post_to_tumblr(text, filepath):
     # client.info()
 
 
+def post_to_pintereset(text, image_path):
+    tumblr_pw = os.environ.get("PINTEREST_PASSWORD", "")
+    pinterest = Pinterest(email='biketours@bencarneiro.com', password=tumblr_pw, username='hippiecitybiketours', cred_root='pinterest')
+    logged_in = pinterest.login()
+    print(logged_in)
+
+
+    boards = pinterest.boards(username="hippiecitybiketours")
+
+    for board in boards:
+        
+        board_id = board['id']
+        board_name = board['name']
+        
+        print("Looking for pins for " + board_name)
+        print(board_id)
+    pinterest.upload_pin(board_id="945896796675959701", image_file=image_path, description=text, title="Austin Bike Tours", link='https://hippie.city')
+    # pinterest.upload_pin(board_id=board_id, section_id=section_id, image_file=image_path, description=description, title=title, link=link)
+
 class Command(BaseCommand):
 
     help = 'Post media to all socials'
@@ -160,3 +180,4 @@ class Command(BaseCommand):
         # post_to_mastodon(tweet_body, filepath_to_media)
         # post_to_facebook(tweet_body, filepath_to_media)
         # post_to_tumblr(tweet_body, filepath_to_media)
+        # post_to_pintereset(tweet_body, filepath_to_media)
