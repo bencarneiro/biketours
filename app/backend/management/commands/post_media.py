@@ -186,58 +186,6 @@ def post_to_pintereset(text, image_path):
         except:
             print("error")
 
-# def post_to_linkedin(tweet):
-
-
-    # API_KEY = '86zkt4ad8b6szo'
-    # API_SECRET = 'HBNtEZDckfdQ56Q4'
-    # RETURN_URL = 'https://hippie.city'
-    # ACCESS_TOKEN = os.environ.get("LINKEDIN_ACCESS_TOKEN_2", "")
-    
-    # headers = {
-    #     "Content-Type": "application/json",
-    #     "X-Restli-Protocol-Version": "2.0.0",
-    #     "Authorization": "Bearer " + ACCESS_TOKEN
-    # }
-    # me = requests.get("https://api.linkedin.com/v2/me", headers=headers)
-    # print(me.json())
-    # # Initialize the LinkedIn application
-    # # app = linkedin.LinkedInApplication(token=ACCESS_TOKEN)
-
-    # # Define the content you want to post
-    # post_content = {"author": "urn:li:organization:101550409",
-    #             "lifecycleState": "PUBLISHED",
-    #             "specificContent": {
-    #                 "com.linkedin.ugc.ShareContent": {
-    #                     "shareCommentary": {
-    #                         "text": "This is a test post from a command-line interface! #austin #bikes"
-    #                     },
-    #                     "shareMediaCategory": "NONE"
-    #                 }
-    #             },
-    #             "visibility": {
-    #                 "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
-    #             }
-    #         }
-    # image_url = "https://www.tumblr.com/hippiecity/741723619442475008/come-ride-bikes-and-experience-the-healing-magic"
-
-    # # Post the content to your business page
-    # # try:
-    # #     app.submit_share(post_content, submitted_image_url=image_url, visibility={'code': 'anyone'})
-    # #     print("Post successfully submitted to LinkedIn business page.")
-    # # except Exception as e:
-    # #     print("LINKEDIN EMERGENCY")
-    # #     print(e)
-    # post_url = "https://api.linkedin.com/v2/ugcPosts"
-    # try:
-    #     response = requests.post(post_url, headers=headers, json=post_content)
-    #     if response.status_code == 201:
-    #         print("Post successfully submitted to LinkedIn business page.")
-    #     else:
-    #         print("Error occurred while posting:", response.text)
-    # except Exception as e:
-    #     print("Error occurred:", e)
-
 class Command(BaseCommand):
 
     help = 'Post media to all socials'
@@ -260,11 +208,40 @@ class Command(BaseCommand):
         filepath_to_media = None
         if kwargs['m']:
             filepath_to_media = kwargs['m']
-        # tweet(tweet_body, filepath_to_media)
-        # if filepath_to_media:
-        #     upload_to_instagram(filepath_to_media, tweet_body)
-        # post_to_mastodon(tweet_body, filepath_to_media)
-        # post_to_facebook(tweet_body, filepath_to_media)
-        # post_to_tumblr(tweet_body, filepath_to_media)
-        post_to_pintereset(tweet_body, filepath_to_media)
-        # post_to_linkedin(tweet_body)
+        try:
+            tweet(tweet_body, filepath_to_media)
+            print("tweet tweeted")
+        except Exception as e:
+            print("twitter failed")
+            print(e)
+        if filepath_to_media:
+            try:
+                upload_to_instagram(filepath_to_media, tweet_body)
+                print("insta successfull")
+            except Exception as e:
+                print("Insta failed")
+                print(e)
+        try:
+            post_to_mastodon(tweet_body, filepath_to_media)
+            print("mastodon success")
+        except Exception as e:
+            print("Mastodon failed")
+            print(e)
+        try:
+            post_to_facebook(tweet_body, filepath_to_media)
+            print("posted to facebook")
+        except Exception as e:
+            print("Facebook failed")
+            print(e)
+        try:
+            post_to_tumblr(tweet_body, filepath_to_media)
+            print("consider it tumblrd")
+        except Exception as e:
+            print("Tumblr failed")
+            print(e)
+        try:
+            post_to_pintereset(tweet_body, filepath_to_media)
+            print("Pinterest pinned")
+        except Exception as e:
+            print("Pinterest failed")
+            print(e)
