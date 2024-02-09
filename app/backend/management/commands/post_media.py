@@ -7,6 +7,13 @@ import facebook
 import requests
 import pytumblr
 from py3pin.Pinterest import Pinterest
+# from linkedin import linkedin
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 def get_twitter_conn_v1(api_key, api_secret, access_token, access_token_secret) -> tweepy.API:
     """Get twitter conn 1.1"""
@@ -134,23 +141,119 @@ def post_to_tumblr(text, filepath):
 
 
 def post_to_pintereset(text, image_path):
+    pinterest_username="biketours@bencarneiro.com"
     tumblr_pw = os.environ.get("PINTEREST_PASSWORD", "")
-    pinterest = Pinterest(email='biketours@bencarneiro.com', password=tumblr_pw, username='hippiecitybiketours', cred_root='pinterest')
-    logged_in = pinterest.login()
-    print(logged_in)
+
+    driver = webdriver.Chrome()
+    driver.implicitly_wait(15) # seconds
+    driver.get("http://www.pinterest.com")
+    # login = driver.find_element(By.LINK_TEXT, "Log in")
+    login = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div/div/div/div[1]/div/div[2]/div[2]")
+    login.click()
+    email = driver.find_element(By.ID, "email")
+    email.clear()
+    email.send_keys(pinterest_username)
+    password = driver.find_element(By.ID, "password")
+    password.clear()
+    password.send_keys(tumblr_pw)
+    login = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div[2]/div/div/div/div/div/div[4]/form/div[7]/button")
+    login.click()
+    page_is_loaded = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div/div/div[2]/div/div/div/div[4]/div/a/div/div/span"))
+    )
+    driver.get("https://www.pinterest.com/hippie_city/bike/")
+    post_pin = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[5]/div/div/div/div/div/div/button")
+    post_pin.click()
+    create_pin = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[5]/div/div[2]/div/div/div/div[1]/div[2]")
+    create_pin.click()
+    driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[1]/div/div[1]/div/input").send_keys(image_path)
+    
+    #title
+    title = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[2]/div/div/div[1]/div/span/div/input").send_keys("Austin Bike Tours")
+    
+    description = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/div/div"))
+    ).click()
+    # description = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/div/div/div/div/div/span/span").send_keys(text)
+    # description.click()
+    link = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[2]/div/div/div[3]/div/div[1]/div/span/div/input").send_keys("https://hippie.city")
+    submit_pin = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[2]/div[4]/div[2]/div/button/div/div"))
+    ).click()
+
+    pin_submitted = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div/div/div[2]/div/div/div/div[4]/div/a/div/div/span"))
+    )
+    # submit_pin = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[2]/div[4]/div[2]/div/button/div/div").click()
+    # element = driver.find_element(by.CLASS_NAME, "HEm adn yQo lnZ wsz YbY")
+    # pinterest = Pinterest(email='biketours@bencarneiro.com', password=tumblr_pw, username='hippiecitybiketours', cred_root='pinterest')
+    # logged_in = pinterest.login()
+    # print(logged_in)
 
 
-    boards = pinterest.boards(username="hippiecitybiketours")
+    # boards = pinterest.boards(username="hippiecitybiketours")
 
-    for board in boards:
+    # for board in boards:
         
-        board_id = board['id']
-        board_name = board['name']
+    #     board_id = board['id']
+    #     board_name = board['name']
         
-        print("Looking for pins for " + board_name)
-        print(board_id)
-    pinterest.upload_pin(board_id="945896796675959701", image_file=image_path, description=text, title="Austin Bike Tours", link='https://hippie.city')
+    #     print("Looking for pins for " + board_name)
+    #     print(board_id)
+    # pinterest.upload_pin(board_id="945896796675959701", image_file=image_path, description=text, title="Austin Bike Tours", link='https://hippie.city')
     # pinterest.upload_pin(board_id=board_id, section_id=section_id, image_file=image_path, description=description, title=title, link=link)
+
+# def post_to_linkedin(tweet):
+
+
+    # API_KEY = '86zkt4ad8b6szo'
+    # API_SECRET = 'HBNtEZDckfdQ56Q4'
+    # RETURN_URL = 'https://hippie.city'
+    # ACCESS_TOKEN = os.environ.get("LINKEDIN_ACCESS_TOKEN_2", "")
+    
+    # headers = {
+    #     "Content-Type": "application/json",
+    #     "X-Restli-Protocol-Version": "2.0.0",
+    #     "Authorization": "Bearer " + ACCESS_TOKEN
+    # }
+    # me = requests.get("https://api.linkedin.com/v2/me", headers=headers)
+    # print(me.json())
+    # # Initialize the LinkedIn application
+    # # app = linkedin.LinkedInApplication(token=ACCESS_TOKEN)
+
+    # # Define the content you want to post
+    # post_content = {"author": "urn:li:organization:101550409",
+    #             "lifecycleState": "PUBLISHED",
+    #             "specificContent": {
+    #                 "com.linkedin.ugc.ShareContent": {
+    #                     "shareCommentary": {
+    #                         "text": "This is a test post from a command-line interface! #austin #bikes"
+    #                     },
+    #                     "shareMediaCategory": "NONE"
+    #                 }
+    #             },
+    #             "visibility": {
+    #                 "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
+    #             }
+    #         }
+    # image_url = "https://www.tumblr.com/hippiecity/741723619442475008/come-ride-bikes-and-experience-the-healing-magic"
+
+    # # Post the content to your business page
+    # # try:
+    # #     app.submit_share(post_content, submitted_image_url=image_url, visibility={'code': 'anyone'})
+    # #     print("Post successfully submitted to LinkedIn business page.")
+    # # except Exception as e:
+    # #     print("LINKEDIN EMERGENCY")
+    # #     print(e)
+    # post_url = "https://api.linkedin.com/v2/ugcPosts"
+    # try:
+    #     response = requests.post(post_url, headers=headers, json=post_content)
+    #     if response.status_code == 201:
+    #         print("Post successfully submitted to LinkedIn business page.")
+    #     else:
+    #         print("Error occurred while posting:", response.text)
+    # except Exception as e:
+    #     print("Error occurred:", e)
 
 class Command(BaseCommand):
 
@@ -180,4 +283,5 @@ class Command(BaseCommand):
         # post_to_mastodon(tweet_body, filepath_to_media)
         # post_to_facebook(tweet_body, filepath_to_media)
         # post_to_tumblr(tweet_body, filepath_to_media)
-        # post_to_pintereset(tweet_body, filepath_to_media)
+        post_to_pintereset(tweet_body, filepath_to_media)
+        # post_to_linkedin(tweet_body)
