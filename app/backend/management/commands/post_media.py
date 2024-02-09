@@ -172,36 +172,19 @@ def post_to_pintereset(text, image_path):
     title = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[2]/div/div/div[1]/div/span/div/input").send_keys("Austin Bike Tours")
     
     description = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/div/div"))
-    ).click()
+        EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/div/div/div/div/div/span"))
+    ).send_keys(text)
     # description = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/div/div/div/div/div/span/span").send_keys(text)
     # description.click()
     link = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[3]/div/div/div[2]/div/div/div[3]/div/div[1]/div/span/div/input").send_keys("https://hippie.city")
-    submit_pin = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[2]/div[4]/div[2]/div/button/div/div"))
-    ).click()
-
-    pin_submitted = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div/div/div[2]/div/div/div/div[4]/div/a/div/div/span"))
-    )
-    # submit_pin = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[2]/div[4]/div[2]/div/button/div/div").click()
-    # element = driver.find_element(by.CLASS_NAME, "HEm adn yQo lnZ wsz YbY")
-    # pinterest = Pinterest(email='biketours@bencarneiro.com', password=tumblr_pw, username='hippiecitybiketours', cred_root='pinterest')
-    # logged_in = pinterest.login()
-    # print(logged_in)
-
-
-    # boards = pinterest.boards(username="hippiecitybiketours")
-
-    # for board in boards:
-        
-    #     board_id = board['id']
-    #     board_name = board['name']
-        
-    #     print("Looking for pins for " + board_name)
-    #     print(board_id)
-    # pinterest.upload_pin(board_id="945896796675959701", image_file=image_path, description=text, title="Austin Bike Tours", link='https://hippie.city')
-    # pinterest.upload_pin(board_id=board_id, section_id=section_id, image_file=image_path, description=description, title=title, link=link)
+    wait = WebDriverWait(driver, 10)
+    for x in range(5):
+        try:
+            submit_pin = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[2]/div[4]/div[2]/div/button"))
+            ).click()
+        except:
+            print("error")
 
 # def post_to_linkedin(tweet):
 
