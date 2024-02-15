@@ -116,7 +116,7 @@ def home(request):
     counter = 0
     calendar_object = {}
     day = datetime.date.today()
-    while counter < 31:
+    while counter < 60:
         date_str = day.strftime("%Y-%m-%d")
         print(date_str)
         start = datetime.datetime.combine(day, datetime.time.min)
