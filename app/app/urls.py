@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from backend.views import home, stripe_webhook, checkout, cancel, success, create_checkout_session, calendar, barton, report, favicon_view
+from backend.views import home, stripe_webhook, checkout, cancel, success, create_checkout_session, calendar, barton, report, favicon_view, homepage_image_1, homepage_image_2, homepage_image_3, homepage_image_4, homepage_image_5, gallery
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -30,5 +30,11 @@ urlpatterns = [
     path("barton/", barton, name="barton"),
     path("report/", report, name="report"),
     path("create_checkout_session/", create_checkout_session, name="create_checkout_session"),
+    path("homepage_image_1", homepage_image_1, name="homepage_image_1"),
+    path("homepage_image_2", homepage_image_2, name="homepage_image_2"),
+    path("homepage_image_3", homepage_image_3, name="homepage_image_3"),
+    path("homepage_image_4", homepage_image_4, name="homepage_image_4"),
+    path("homepage_image_5", homepage_image_5, name="homepage_image_5"),
+    path("gallery", gallery, name="gallery"),
     re_path(r'^favicon\.ico$', favicon_view),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

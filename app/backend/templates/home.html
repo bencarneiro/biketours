@@ -4,6 +4,7 @@
 <html>
 <head>
   <script defer src="https://us.umami.is/script.js" data-website-id="aa83b743-bc2b-4587-8c5d-d7954fa4b957"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
 <title>Austin Bike Tours</title>
 <link rel="shortcut icon" type="image/ico" href="{% static 'images/favicon.ico' %}">
 <meta charset="UTF-8">
@@ -12,6 +13,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+
 body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 table, th, td {
             border: 1px solid white;
@@ -76,8 +78,10 @@ table, th, td {
     <h5>DROP OUT | FIND GOD | RIDE BIKES</h5>
   </header>
   
-
-  <img src="/static/barton_dive_resized.jpg" alt="A man dives head-first into Barton Springs Pool on a sunny Texas afternoon" class="w3-image" width=100%>
+  <div hx-get="/homepage_image_1" hx-trigger="load">
+    <img  alt="Result loading..." class="htmx-indicator" width="150" src="https://htmx.org/img/bars.svg"/>
+  </div>
+  <!-- <img src="/static/barton_dive_resized.jpg" alt="A man dives head-first into Barton Springs Pool on a sunny Texas afternoon" class="w3-image" width=100%> -->
   <!-- About Tours Section -->
 
   <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
@@ -85,14 +89,19 @@ table, th, td {
     <hr style="width:100%" class="w3-opacity">
     <p>Visiting Austin is an excellent opportunity to discover your inner alcoholic, but we actually have very nice parks too!</p>
     </div>
-  <img src="/static/trail_lake_resized.jpg" alt="boy" class="w3-image" width=100%>
+    <div hx-get="/homepage_image_2" hx-trigger="load">
+      <img  alt="Result loading..." class="htmx-indicator" width="150" src="https://htmx.org/img/bars.svg"/>
+    </div>
   <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about2">
 
     <h2 class="w3-text-light-grey">See the Creek!</h2>
     <hr style="width:100%" class="w3-opacity">
     <p>Some parts are safe to swim in!</p>
   </div>
-  <img src="/static/creek_boiz_resized.jpg" alt="boy" class="w3-image" width=100%>
+  <div hx-get="/homepage_image_3" hx-trigger="load">
+    <img  alt="Result loading..." class="htmx-indicator" width="150" src="https://htmx.org/img/bars.svg"/>
+  </div>
+  
    
   <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about3">
     <h2 class="w3-text-light-grey">Meet the Geese!</h2>
@@ -103,7 +112,9 @@ table, th, td {
     
     <!-- <img src="/static/selfie_mopac.jpg" style="width:100%"> -->
   </div>
-  <img src="/static/goose_mode_resized.jpg" alt="boy" class="w3-image" width=100%>
+  <div hx-get="/homepage_image_4" hx-trigger="load">
+    <img  alt="Result loading..." class="htmx-indicator" width="150" src="https://htmx.org/img/bars.svg"/>
+  </div>
 
   <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about4">
 
@@ -111,8 +122,9 @@ table, th, td {
     <hr style="width:100%" class="w3-opacity">
     </div>
   
-  <img src="/static/good_skyline_ben_resized.jpg" alt="boy" class="w3-image" width=100%>
-
+    <div hx-get="/homepage_image_5" hx-trigger="load">
+      <img  alt="Result loading..." class="htmx-indicator" width="150" src="https://htmx.org/img/bars.svg"/>
+    </div>
   <!-- About Ben -->
   <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
     <h2 class="w3-text-light-grey">About Ben</h2>
@@ -169,28 +181,18 @@ table, th, td {
     <!-- End BOOKING Section -->
   </div>
 
-  <!-- Portfolio Section -->
-  <div class="w3-padding-64 w3-content" id="photos">
-    <h2 class="w3-text-light-grey">Photos</h2>
-    <hr style="width:100%" class="w3-opacity">
 
-    <!-- Grid for photos -->
-    <div class="w3-row-padding" style="margin:0 -16px">
-      <div class="w3-half">
-        <img src="/static/bike_skyline_resized.jpg" style="width:100%" alt="A red road bike on a boardwalk in front of Austin's Lady Bird Lake and the city skyline">
-        <img src="/static/bike_lake_resized.jpg" style="width:100%" alt="A red road bike on a gravel trail in front of Austin's Lady Bird Lake">
-        <img src="/static/funny_selfie_resized.jpg" style="width:100%" alt="A silly picture of a boy in a colorful sweater riding a bicycle">
-      </div>
 
-      <div class="w3-half">
-        <img src="/static/geese_resized.jpg" style="width:100%" alt="Two geese looking over Austin's Lady Bird Lake">
-        <img src="/static/lake_skyline_resized.jpg" style="width:100%" alt="Austin's Skyline reflected over a beautiful body of blue water">
-        <img src="/static/trail_lake_resized.jpg" style="width:100%" alt="A red road bike on a gravel trail in front of Austin's Lady Bird Lake">
-      </div>
-    <!-- End photo grid -->
-    </div>
-  <!-- End Portfolio Section -->
+
+
+  <div hx-get="/gallery" hx-trigger="load">
+    <img  alt="Result loading..." class="htmx-indicator" width="150" src="https://htmx.org/img/bars.svg"/>
   </div>
+
+
+
+
+
   <!-- CONTACT Section -->
   <div class="w3-padding-64 w3-content w3-text-grey" id="contact">
     <h2 class="w3-text-light-grey">Contact Me</h2>

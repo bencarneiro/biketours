@@ -229,6 +229,23 @@ def create_checkout_session(request):
 
     return redirect(checkout_session.url)
 
+def homepage_image_1(request):
+    return render(request, "homepage_image_1.html")
+
+def homepage_image_2(request):
+    return render(request, "homepage_image_2.html")
+
+def homepage_image_3(request):
+    return render(request, "homepage_image_3.html")
+
+def homepage_image_4(request):
+    return render(request, "homepage_image_4.html")
+
+def homepage_image_5(request):
+    return render(request, "homepage_image_5.html")
+
+def gallery(request):
+    return render(request, "gallery.html")
 
 def calendar(request):
     counter = 0
