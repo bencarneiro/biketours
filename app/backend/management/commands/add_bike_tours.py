@@ -23,11 +23,12 @@ class Command(BaseCommand):
                 day = day + datetime.timedelta(days=1)
                 counter += 1
                 continue
-            if start.weekday() != 0:
+            # if start.weekday() != 0:
+            if True:
                 tour_type = TourType.objects.get(id=1)
                 tour = Tour(
                     type=tour_type,
-                    day= start + datetime.timedelta(hours=11),
+                    day= start + datetime.timedelta(hours=9),
                     capacity=6
                 )
                 tour.save()
