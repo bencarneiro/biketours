@@ -139,3 +139,14 @@ class ConfirmationEmailSent(models.Model):
     class Meta:
         managed = True
         db_table = "confirmation_email_sent"
+
+
+
+class Test(models.Model):
+    id = models.CharField(primary_key=True, max_length=256)
+
+class TestLog(models.Model):
+    test = models.ForeignKey(Test, on_delete=models.DO_NOTHING)
+    created = models.DateTimeField(auto_now=True)
+    passed = models.BooleanField(default=False)
+    log = models.TextField(null=True)

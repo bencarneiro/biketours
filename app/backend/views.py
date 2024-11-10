@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from app import settings
 import datetime
 from django.views.decorators.csrf import csrf_exempt
-from backend.models import CheckoutSession, Tour, TourSpot, ConfirmationEmailSent
+from backend.models import CheckoutSession, Tour, TourSpot, ConfirmationEmailSent, Test, TestLog
 import json
 import stripe
 from django.views.generic.base import RedirectView
@@ -265,6 +265,26 @@ def calendar(request):
     # test = Tour.objects.filter(day__lt=next_month)
     context = {"calendar": calendar_object}
     return render(request, "calendar.html", context)
+
+
+
+def monitor(request):
+    traffic_test = Test.objects.get(id="test_traffic_bot.py")
+    vision_zero_test = Test.objects.get(id="test_vision_zero_bot.py")
+    puppy_test = Test.objects.get(id="test_puppy_bot.py")
+    shrek_test = Test.objects.get(id="test_shrek_bot.py")
+    traffic_bot_logs = TestLog.objects.filter(test=traffic_test).order_by("-created")[:5]
+    vision_zero_bot_logs = TestLog.objects.filter(test=vision_zero_test).order_by("-created")[:5]
+    puppy_bot_logs = TestLog.objects.filter(test=puppy_test).order_by("-created")[:5]
+    shrek_bot_logs = TestLog.objects.filter(test=shrek_test).order_by("-created")[:5]
+    context = {
+        "traffic_bot_logs": traffic_bot_logs, 
+        "vision_zero_bot_logs": vision_zero_bot_logs,
+        "puppy_bot_logs": puppy_bot_logs,
+        "shrek_bot_logs": shrek_bot_logs
+
+    }
+    return render(request, "monitor.html", context)
 
 
 favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
