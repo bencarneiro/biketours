@@ -1,0 +1,264 @@
+<html>
+    <style>
+        #traffic_bot {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        #traffic_bot td, #traffic_bot th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #traffic_bot tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #traffic_bot tr:hover {background-color: #ddd;}
+        
+        #traffic_bot th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #04AA6D;
+          color: white;
+        }
+
+        #vision_zero_bot {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        #vision_zero_bot td, #vision_zero_bot th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #vision_zero_bot tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #vision_zero_bot tr:hover {background-color: #ddd;}
+        
+        #vision_zero_bot th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #04AA6D;
+          color: white;
+        }
+
+        #puppy_bot {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        #puppy_bot td, #puppy_bot th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #puppy_bot tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #puppy_bot tr:hover {background-color: #ddd;}
+        
+        #puppy_bot th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #04AA6D;
+          color: white;
+        }
+
+        #shrek_bot {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        #shrek_bot td, #shrek_bot th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #shrek_bot tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #shrek_bot tr:hover {background-color: #ddd;}
+        
+        #shrek_bot th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #04AA6D;
+          color: white;
+        }
+</style>
+
+{% load tz %}
+
+    <h1>Traffic Bot <a href="https://mastodon.social/@austin_traffic_bot">(link)</a></h1>
+
+    <table id="traffic_bot">
+        <tr>
+            <th>
+                test name
+            </th>
+            <th>
+                ran at
+            </th>
+            <th>
+                passed
+            </th>
+            <th>
+                log
+            </th>
+        </tr>
+        {% for log in traffic_bot_logs %}
+        <tr>
+
+        <td>
+            {{ log.test_id }}
+        </td>
+            
+        {% timezone "America/Chicago" %}
+        <td>
+             {{ log.created }}
+        </td>
+        {% endtimezone %}
+
+            <td>
+                {{ log.passed }}
+            </td>
+            <td>
+                 {{ log.log }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <h1>Vision Zero Bot <a href="https://mastodon.social/@vision_zero">(link)</a></h1>
+
+    <table id="vision_zero_bot">
+        <tr>
+            <th>
+                test name
+            </th>
+            <th>
+                ran at
+            </th>
+            <th>
+                passed
+            </th>
+            <th>
+                log
+            </th>
+        </tr>
+        {% for log in vision_zero_bot_logs %}
+        <tr>
+
+        <td>
+            {{ log.test_id }}
+        </td>
+            
+        {% timezone "America/Chicago" %}
+        <td>
+             {{ log.created }}
+        </td>
+        {% endtimezone %}
+
+            <td>
+                {{ log.passed }}
+            </td>
+            <td>
+                 {{ log.log }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+
+    <h1>Austin Animal Center <a href="https://mastodon.social/@puppy_bot">(link)</a></h1>
+
+    <table id="puppy_bot">
+        <tr>
+            <th>
+                test name
+            </th>
+            <th>
+                ran at
+            </th>
+            <th>
+                passed
+            </th>
+            <th>
+                log
+            </th>
+        </tr>
+        {% for log in puppy_bot_logs %}
+        <tr>
+
+        <td>
+            {{ log.test_id }}
+        </td>
+            
+        {% timezone "America/Chicago" %}
+        <td>
+             {{ log.created }}
+        </td>
+        {% endtimezone %}
+
+            <td>
+                {{ log.passed }}
+            </td>
+            <td>
+                 {{ log.log }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+
+    <h1>Shrek 5 Countdown Bot <a href="https://bencarneiro.com/@shrek5bot">(link)</a></h1>
+
+    <table id="shrek_bot">
+        <tr>
+            <th>
+                test name
+            </th>
+            <th>
+                ran at
+            </th>
+            <th>
+                passed
+            </th>
+            <th>
+                log
+            </th>
+        </tr>
+        {% for log in shrek_bot_logs %}
+        <tr>
+
+        <td>
+            {{ log.test_id }}
+        </td>
+            
+        {% timezone "America/Chicago" %}
+        <td>
+             {{ log.created }}
+        </td>
+        {% endtimezone %}
+
+            <td>
+                {{ log.passed }}
+            </td>
+            <td>
+                 {{ log.log }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+</html>
