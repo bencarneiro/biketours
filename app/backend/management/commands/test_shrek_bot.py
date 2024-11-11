@@ -23,12 +23,12 @@ class Command(BaseCommand):
             test.save()
 
         try:
-            r = requests.get("https://bencarneiro.com/api/v1/accounts/112853697332395541/statuses")
-
-            now = datetime.datetime.today().replace(tzinfo= pytz.timezone('UTC'))
-            last_post_dt = dateparser.parse(r.json()[0]["created_at"]).replace(tzinfo=pytz.utc)
-            time_since_last_post = now - last_post_dt
-            print(last_post_dt)
+            r = requests.get("https://bencarneiro.com/@shrek5bot.rss")
+            last_post_datetime = r.text.split("<item>")[1].split("<pubDate>")[1].split("</pubDate>")[0]
+            post = dateparser.parse(last_post_datetime).replace(tzinfo= pytz.timezone('UTC'))
+            now = datetime.datetime.utcnow().replace(tzinfo= pytz.timezone('UTC'))
+            time_since_last_post = now - post
+            print(post)
             print(now)
             print(time_since_last_post)
 
