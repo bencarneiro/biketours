@@ -1,90 +1,22 @@
 <html>
     <style>
-        #traffic_bot {
+        
+        table {
           font-family: Arial, Helvetica, sans-serif;
           border-collapse: collapse;
           width: 100%;
         }
         
-        #traffic_bot td, #traffic_bot th {
+        td, th {
           border: 1px solid #ddd;
           padding: 8px;
         }
         
-        #traffic_bot tr:nth-child(even){background-color: #f2f2f2;}
+        tr:nth-child(even){background-color: #f2f2f2;}
         
-        #traffic_bot tr:hover {background-color: #ddd;}
+        tr:hover {background-color: #ddd;}
         
-        #traffic_bot th {
-          padding-top: 12px;
-          padding-bottom: 12px;
-          text-align: left;
-          background-color: #04AA6D;
-          color: white;
-        }
-
-        #vision_zero_bot {
-          font-family: Arial, Helvetica, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
-        
-        #vision_zero_bot td, #vision_zero_bot th {
-          border: 1px solid #ddd;
-          padding: 8px;
-        }
-        
-        #vision_zero_bot tr:nth-child(even){background-color: #f2f2f2;}
-        
-        #vision_zero_bot tr:hover {background-color: #ddd;}
-        
-        #vision_zero_bot th {
-          padding-top: 12px;
-          padding-bottom: 12px;
-          text-align: left;
-          background-color: #04AA6D;
-          color: white;
-        }
-
-        #puppy_bot {
-          font-family: Arial, Helvetica, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
-        
-        #puppy_bot td, #puppy_bot th {
-          border: 1px solid #ddd;
-          padding: 8px;
-        }
-        
-        #puppy_bot tr:nth-child(even){background-color: #f2f2f2;}
-        
-        #puppy_bot tr:hover {background-color: #ddd;}
-        
-        #puppy_bot th {
-          padding-top: 12px;
-          padding-bottom: 12px;
-          text-align: left;
-          background-color: #04AA6D;
-          color: white;
-        }
-
-        #shrek_bot {
-          font-family: Arial, Helvetica, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
-        
-        #shrek_bot td, #shrek_bot th {
-          border: 1px solid #ddd;
-          padding: 8px;
-        }
-        
-        #shrek_bot tr:nth-child(even){background-color: #f2f2f2;}
-        
-        #shrek_bot tr:hover {background-color: #ddd;}
-        
-        #shrek_bot th {
+        th {
           padding-top: 12px;
           padding-bottom: 12px;
           text-align: left;
@@ -94,6 +26,262 @@
 </style>
 
 {% load tz %}
+
+
+
+
+<h1>Roadway Report Monitor <a href="https://roadway.report">(link)</a></h1>
+
+<table id="roadway_report">
+    <tr>
+        <th>
+            test name
+        </th>
+        <th>
+            ran at
+        </th>
+        <th>
+            passed
+        </th>
+        <th>
+            log
+        </th>
+    </tr>
+    {% for log in roadway_report_logs %}
+    <tr>
+
+    <td>
+        {{ log.test_id }}
+    </td>
+        
+    {% timezone "America/Chicago" %}
+    <td>
+         {{ log.created }}
+    </td>
+    {% endtimezone %}
+
+        <td>
+            {{ log.passed }}
+        </td>
+        <td>
+             {{ log.log }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+<h1>CensusMaps.org Monitor <a href="https://censusmaps.org">(link)</a></h1>
+
+<table id="census_maps">
+    <tr>
+        <th>
+            test name
+        </th>
+        <th>
+            ran at
+        </th>
+        <th>
+            passed
+        </th>
+        <th>
+            log
+        </th>
+    </tr>
+    {% for log in census_maps_logs %}
+    <tr>
+
+    <td>
+        {{ log.test_id }}
+    </td>
+        
+    {% timezone "America/Chicago" %}
+    <td>
+         {{ log.created }}
+    </td>
+    {% endtimezone %}
+
+        <td>
+            {{ log.passed }}
+        </td>
+        <td>
+             {{ log.log }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+<h1>Transit Observer Monitor <a href="https://transit.observer">(link)</a></h1>
+
+<table id="transit_observer">
+    <tr>
+        <th>
+            test name
+        </th>
+        <th>
+            ran at
+        </th>
+        <th>
+            passed
+        </th>
+        <th>
+            log
+        </th>
+    </tr>
+    {% for log in transit_observer_logs %}
+    <tr>
+
+    <td>
+        {{ log.test_id }}
+    </td>
+        
+    {% timezone "America/Chicago" %}
+    <td>
+         {{ log.created }}
+    </td>
+    {% endtimezone %}
+
+        <td>
+            {{ log.passed }}
+        </td>
+        <td>
+             {{ log.log }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+<h1>Hippie City Monitor <a href="https://hippie.city">(link)</a></h1>
+
+<table id="hippie_city">
+    <tr>
+        <th>
+            test name
+        </th>
+        <th>
+            ran at
+        </th>
+        <th>
+            passed
+        </th>
+        <th>
+            log
+        </th>
+    </tr>
+    {% for log in hippie_city_logs %}
+    <tr>
+
+    <td>
+        {{ log.test_id }}
+    </td>
+        
+    {% timezone "America/Chicago" %}
+    <td>
+         {{ log.created }}
+    </td>
+    {% endtimezone %}
+
+        <td>
+            {{ log.passed }}
+        </td>
+        <td>
+             {{ log.log }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+<h1>bencarneiro.com Monitor <a href="https://bencarneiro.com">(link)</a></h1>
+
+<table id="ben_carneiro">
+    <tr>
+        <th>
+            test name
+        </th>
+        <th>
+            ran at
+        </th>
+        <th>
+            passed
+        </th>
+        <th>
+            log
+        </th>
+    </tr>
+    {% for log in ben_carneiro_logs %}
+    <tr>
+
+    <td>
+        {{ log.test_id }}
+    </td>
+        
+    {% timezone "America/Chicago" %}
+    <td>
+         {{ log.created }}
+    </td>
+    {% endtimezone %}
+
+        <td>
+            {{ log.passed }}
+        </td>
+        <td>
+             {{ log.log }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+<h1>draft.support Monitor <a href="https://draft_support">(link)</a></h1>
+
+<table id="draft_support">
+    <tr>
+        <th>
+            test name
+        </th>
+        <th>
+            ran at
+        </th>
+        <th>
+            passed
+        </th>
+        <th>
+            log
+        </th>
+    </tr>
+    {% for log in draft_support_logs %}
+    <tr>
+
+    <td>
+        {{ log.test_id }}
+    </td>
+        
+    {% timezone "America/Chicago" %}
+    <td>
+         {{ log.created }}
+    </td>
+    {% endtimezone %}
+
+        <td>
+            {{ log.passed }}
+        </td>
+        <td>
+             {{ log.log }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
 
     <h1>Traffic Bot <a href="https://mastodon.social/@austin_traffic_bot">(link)</a></h1>
 

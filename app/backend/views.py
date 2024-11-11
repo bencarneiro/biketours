@@ -273,16 +273,33 @@ def monitor(request):
     vision_zero_test = Test.objects.get(id="test_vision_zero_bot.py")
     puppy_test = Test.objects.get(id="test_puppy_bot.py")
     shrek_test = Test.objects.get(id="test_shrek_bot.py")
+    roadway_report_test = Test.objects.get(id="test_roadway_report.py")
+    census_maps_test = Test.objects.get(id="test_census_maps.py")
+    draft_support_test = Test.objects.get(id="test_draft_support.py")
+    hippie_city_test = Test.objects.get(id="test_hippie_city.py")
+    ben_carneiro_test = Test.objects.get(id="test_ben_carneiro.py")
+    transit_observer_test = Test.objects.get(id="test_transit_observer.py")
     traffic_bot_logs = TestLog.objects.filter(test=traffic_test).order_by("-created")[:5]
     vision_zero_bot_logs = TestLog.objects.filter(test=vision_zero_test).order_by("-created")[:5]
     puppy_bot_logs = TestLog.objects.filter(test=puppy_test).order_by("-created")[:5]
     shrek_bot_logs = TestLog.objects.filter(test=shrek_test).order_by("-created")[:5]
+    roadway_report_logs = TestLog.objects.filter(test=roadway_report_test).order_by("-created")[:5]
+    census_maps_logs = TestLog.objects.filter(test=census_maps_test).order_by("-created")[:5]
+    draft_support_logs = TestLog.objects.filter(test=draft_support_test).order_by("-created")[:5]
+    hippie_city_logs = TestLog.objects.filter(test=hippie_city_test).order_by("-created")[:5]
+    ben_carneiro_logs = TestLog.objects.filter(test=ben_carneiro_test).order_by("-created")[:5]
+    transit_observer_logs = TestLog.objects.filter(test=transit_observer_test).order_by("-created")[:5]
     context = {
         "traffic_bot_logs": traffic_bot_logs, 
         "vision_zero_bot_logs": vision_zero_bot_logs,
         "puppy_bot_logs": puppy_bot_logs,
-        "shrek_bot_logs": shrek_bot_logs
-
+        "shrek_bot_logs": shrek_bot_logs,
+        "roadway_report_logs": roadway_report_logs,
+        "census_maps_logs": census_maps_logs,
+        "draft_support_logs": draft_support_logs,
+        "hippie_city_logs": hippie_city_logs,
+        "ben_carneiro_logs": ben_carneiro_logs,
+        "transit_observer_logs": transit_observer_logs
     }
     return render(request, "monitor.html", context)
 

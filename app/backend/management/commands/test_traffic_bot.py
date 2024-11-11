@@ -46,6 +46,13 @@ class Command(BaseCommand):
                     log=log
                 )
                 new_log.save()
+                send_mail(
+                    "Test Failure: test_traffic_bot",
+                    f"{log}",
+                    "testing@bencarneiro.com",
+                    ["bencarneiro@gmail.com"],
+                    fail_silently=False,
+                )
         except Exception as e:
             send_mail(
                 "Test Failure: test_traffic_bot",
