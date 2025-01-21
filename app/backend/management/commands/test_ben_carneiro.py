@@ -19,16 +19,16 @@ class Command(BaseCommand):
             test.save()
         
         try:
-            r = requests.get("https://bencarneiro.com")
+            r = requests.get("https://its.bencarneiro.com")
 
             if '<title>Ben Carneiro</title>' in r.text:
                 new_log = TestLog(
                     test=test,
                     passed=True,
-                    log="successfully requested homepage at https://bencarneiro.com"
+                    log="successfully requested homepage at https://its.bencarneiro.com"
                 )
             else:
-                log = "Unsuccessfully requested homepage at https://bencarneiro.com"
+                log = "Unsuccessfully requested homepage at https://its.bencarneiro.com"
                 new_log = TestLog(
                     test=test,
                     passed=False,

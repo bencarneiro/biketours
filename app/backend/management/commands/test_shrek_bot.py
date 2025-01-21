@@ -23,7 +23,7 @@ class Command(BaseCommand):
             test.save()
 
         try:
-            r = requests.get("https://bencarneiro.com/@shrek5bot.rss")
+            r = requests.get("https://its.bencarneiro.com/@shrek5bot.rss")
             last_post_datetime = r.text.split("<item>")[1].split("<pubDate>")[1].split("</pubDate>")[0]
             post = dateparser.parse(last_post_datetime).replace(tzinfo= pytz.timezone('UTC'))
             now = datetime.datetime.utcnow().replace(tzinfo= pytz.timezone('UTC'))
